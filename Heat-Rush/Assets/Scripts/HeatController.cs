@@ -33,7 +33,10 @@ public class HeatController : MonoBehaviour
 		{
 			heat += Time.deltaTime;
 		}
+		if (heat < 0)
+		{
+			heat = 0;
+		}
 
-		Debug.Log(heat);
 	}
 }
