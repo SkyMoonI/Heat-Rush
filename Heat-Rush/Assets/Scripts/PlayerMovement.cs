@@ -59,7 +59,10 @@ public class PlayerMovement : MonoBehaviour
 		{
 			isDashing = false;
 		}
-
+		if (HeatController.Instance.Heat >= 100)
+		{
+			Destroy(gameObject);
+		}
 	}
 
 	private void ApplyGravity()
@@ -106,7 +109,6 @@ public class PlayerMovement : MonoBehaviour
 		// check if movement vector has a magnitude > 0.1f to move the player
 		if (direction.magnitude > 0.1f)
 		{
-			Debug.Log(verticleInput);
 			// get angle to rotate player. convert radian to degree because atan2 returns radian 
 			// and add camera angle to move the player relative to camera look direction
 			float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + mainCamera.eulerAngles.y;
