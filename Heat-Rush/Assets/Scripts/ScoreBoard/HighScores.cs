@@ -20,14 +20,11 @@ public class HighScores : MonoBehaviour
 
 	public static void UploadScore(string username, int score)  //CALLED when Uploading new Score to WEBSITE
 	{//STATIC to call from other scripts easily
-		Debug.Log("UploadScore");
 		instance.StartCoroutine(instance.DatabaseUpload(username, score)); //Calls Instance
 	}
 
 	IEnumerator DatabaseUpload(string userame, int score) //Called when sending new score to Website
 	{
-		Debug.Log("Attempting Upload");
-		Debug.Log(webURL + privateCode + "/add/" + WWW.EscapeURL(userame) + "/" + score);
 		WWW www = new WWW(webURL + privateCode + "/add/" + WWW.EscapeURL(userame) + "/" + score);
 		yield return www;
 
@@ -67,7 +64,7 @@ public class HighScores : MonoBehaviour
 			string username = entryInfo[0];
 			int score = int.Parse(entryInfo[1]);
 			scoreList[i] = new PlayerScore(username, score);
-			print(scoreList[i].username + ": " + scoreList[i].score);
+			//print(scoreList[i].username + ": " + scoreList[i].score);
 		}
 	}
 }

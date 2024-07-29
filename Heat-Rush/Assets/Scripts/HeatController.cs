@@ -13,30 +13,18 @@ public class HeatController : MonoBehaviour
 		set { heat = value; }
 	}
 
-
 	// Start is called before the first frame update
 	void Awake()
 	{
+		if (Instance == null)
+		{
+			Instance = this;
+			DontDestroyOnLoad(gameObject);
+			Heat = 0;
+		}
 		if (Instance != null)
 		{
 			Destroy(gameObject);
 		}
-		Instance = this;
-		DontDestroyOnLoad(gameObject);
-	}
-
-	// Update is called once per frame
-	void Update()
-	{
-
-		if (heat < 100)
-		{
-			heat += Time.deltaTime;
-		}
-		if (heat < 0)
-		{
-			heat = 0;
-		}
-
 	}
 }

@@ -25,43 +25,49 @@ public class PlayerMovement : MonoBehaviour
 
 	[Header("Gravity")]
 	[SerializeField] Transform groundCheck;
-	float groundDistance = 0.4f;
+	[SerializeField] float groundDistance = 0.4f;
 	[SerializeField] LayerMask groundMask;
 	bool isGrounded;
 	float gravity = -9.81f * 5;
 	Vector3 velocity;
 
+	[SerializeField] GameManager gameManager;
 
-
+	void Start()
+	{
+	}
 	// Update is called once per frame
 	void Update()
 	{
 		ApplyGravity();
 
-		if (!isDashing)
+		if (gameManager.IsGameActive && !gameManager.IsDead && !gameManager.IsWin)
 		{
-			Move();
-		}
+			if (!isDashing)
+			{
+				Move();
+			}
 
-		// Handle jump input
-		if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
-		{
-			Jump();
-		}
+			// Handle jump input
+			if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+			{
+				Jump();
+			}
 
-		// Handle dash input
-		if (Input.GetKeyDown(KeyCode.LeftShift) && !isDashing)
-		{
-			StartCoroutine(Dash());
-		}
-		// End dash after dash duration
-		if (isDashing && Time.time - dashStartTime >= dashDuration)
-		{
-			isDashing = false;
-		}
-		if (HeatController.Instance.Heat >= 100)
-		{
-			Destroy(gameObject);
+			// Handle dash input
+			if (Input.GetKeyDown(KeyCode.LeftShift) && !isDashing)
+			{
+				StartCoroutine(Dash());
+			}
+			// End dash after dash duration
+			if (isDashing && Time.time - dashStartTime >= dashDuration)
+			{
+				isDashing = false;
+			}
+			if (HeatController.Instance.Heat >= 100)
+			{
+				Destroy(gameObject);
+			}
 		}
 	}
 
@@ -137,5 +143,14 @@ public class PlayerMovement : MonoBehaviour
 	void OnCollisionExit(Collision other)
 	{
 		isGrounded = false;
+	}
+
+	void OnTriggerEnter(Collider other)
+	{
+		if (other.gameObject.tag == "Finish")
+		{
+			Debug.Log("Finish");
+			gameManager.WinGame();
+		}
 	}
 }
