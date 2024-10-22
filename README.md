@@ -1,6 +1,6 @@
 # Heat-Rush
  PolyMars x ScoreSpace Game Jam Project
-
+to play : https://play.unity.com/en/games/1c1de292-5cf5-4167-88b2-f6fdec94e1fa/heat-rush
 
 
 
